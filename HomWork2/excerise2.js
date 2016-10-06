@@ -7,3 +7,5 @@ Array.prototype.even = function () {
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 const x = arr.odd()
 console.log(x);
+console.log(Array.prototype)
+console.log(arr.__proto__.__proto__)

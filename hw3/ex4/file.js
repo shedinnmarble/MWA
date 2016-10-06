@@ -35,7 +35,7 @@ fs.writeFile(fsPath, overwriteContext, function (err) {
 })
 
 //append file
-fs.appendFile("cs572.txt", "abc");
+fs.appendFile(fsPath, "abc");
 
 //change byte at 10
 
