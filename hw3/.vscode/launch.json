@@ -5,7 +5,7 @@
             "name": "Launch",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/file.js",
+            "program": "${workspaceRoot}/ex4/file.js",
             "stopOnEntry": false,
             "args": [],
             "cwd": "${workspaceRoot}",

@@ -11,3 +11,6 @@ var copyBuffer=new Buffer(20);
 buffer.copy(copyBuffer,0,40,60);
 console.log(copyBuffer.toString())
 console.log("=============================")
+console.log("original buffer")
+console.log(buffer.toString())
+
