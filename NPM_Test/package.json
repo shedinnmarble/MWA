@@ -1,0 +1,21 @@
+{
+  "name": "test_project",
+  "version": "1.0.0",
+  "description": "this is my project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "haha",
+    "hehe"
+  ],
+  "author": "dewei",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.2"
+  }
+}

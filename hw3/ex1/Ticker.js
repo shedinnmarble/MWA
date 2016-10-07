@@ -13,11 +13,10 @@ class Ticker extends EventEmitter {
 
     }
     addEvent() {
-        setInterval(() => {
-            this.prependOnceListener("tick", function () {
-                console.log("TICK")
-            })
-        }, 1000)
+        this.on("tick", function () {
+            console.log("TICK")
+        })
+
     }
 }
 
