@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-// var ejs = require('ejs');
+ var ejs = require('ejs');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var inventors=require('./routes/inventors')
@@ -14,8 +14,9 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 
+//change view extension to .html and use consolidate.js 
 app.set('view engine', 'html');
-app.engine('html',cons.ejs)
+app.engine('html',ejs.renderFile)
 
 app.set('case sensitive routing',true)
 app.set('strict routing',true)
