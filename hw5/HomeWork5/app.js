@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var inventors=require('./routes/inventors')
+var contactus=require('./routes/contactus')
 var cons=require('consolidate')
 var app = express();
 
@@ -37,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/inventors',inventors)
-
+app.use("/contactus", contactus)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found, Sorry');

@@ -5,7 +5,7 @@ var router = express.Router();
 
 /* GET home page. */
 
-router.route('/:id/:name').
+router.route('/').
   all(function (req, res, next) {
     console.log("check autoritions, you are dewei.");
     console.log(req.query)
