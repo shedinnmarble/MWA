@@ -3,10 +3,10 @@ const fs = require('fs')
 const util = require('util');
 //const crypto = require('crypto');
 const router = express.Router();
-//const mycrypt = require("./../utils/ctypt");
-var crypto = require('crypto'),
-    algorithm = 'aes256',
-    password = 'asaadsaad';
+const mycrypt = require("./../utils/ctypt");
+// var crypto = require('crypto'),
+//     algorithm = 'aes256',
+//     password = 'asaadsaad';
 
 
 router.route("/").get(function (req, res) {
@@ -19,19 +19,21 @@ router.route("/").get(function (req, res) {
     //     })
     // })
 
-    collection.findOne({message: "ba12e76147f0f251b3a2975f7acaf446a86be1b4e2a67a5d51d62f7bfbed5c03"}, function (err, doc) {
+    collection.findOne({
+        message: "ba12e76147f0f251b3a2975f7acaf446a86be1b4e2a67a5d51d62f7bfbed5c03"
+    }, function (err, doc) {
         const encrypted = doc.message
         console.log(encrypted)
-        var decipher = crypto.createDecipher(algorithm, password)
-        var dec = decipher.update(encrypted, 'hex', 'utf8');
-        dec += decipher.final('utf8');
+            // var decipher = crypto.createDecipher(algorithm, password)
+            // var dec = decipher.update(encrypted, 'hex', 'utf8');
+            // dec += decipher.final('utf8');
 
 
         // const enc = mycrypt.encrypt(new Buffer("Welcome to CS572 course!"))
-        // const deenctrypted = mycrypt.decrypt(new Buffer(encrypted));
+        const deenctrypted = mycrypt.decrypt(encrypted);
         // console.log(enc.toString())
-        console.log(dec)
-        res.send(dec)
+        console.log(deenctrypted)
+        res.send(deenctrypted)
     });
 
 })
