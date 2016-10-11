@@ -9,12 +9,14 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var inventors = require('./routes/inventors')
 var contactus = require('./routes/contactus')
-var decrypt=require('./routes/decrypt')
+var decrypt = require('./routes/decrypt')
+var resturant = require('./routes/mongohw');
 var cons = require('consolidate')
   // New Code
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('mongodb://dewei:dewei@ds021895.mlab.com:21895/lanbue'); 
+var MongoClient = require('mongodb').MongoClient;
+var MongoServer = require('mongodb').Server;
+//var monk = require('monk');
+//var db = monk('mongodb://dewei:dewei@ds021895.mlab.com:21895/lanbue'); 
 var app = express();
 
 // view engine setup
@@ -23,6 +25,8 @@ app.set('views', path.join(__dirname, 'views'));
 //change view extension to .html and use consolidate.js 
 app.set('view engine', 'html');
 app.engine('html', ejs.renderFile)
+
+//
 
 app.set('case sensitive routing', true)
 app.set('strict routing', true)
@@ -40,49 +44,51 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-// Make our db accessible to our router
-app.use(function (req, res, next) {
-  req.db = db;
-  next();
-});
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/inventors', inventors)
-app.use("/contactus", contactus)
-app.use("/decrypt",decrypt)
-  // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  var err = new Error('Not Found, Sorry');
-  err.status = 404;
-  next(err);
-});
 
-// error handlers
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
+
+
+
+
+  app.use('/', routes);
+  app.use('/users', users);
+  app.use('/inventors', inventors)
+  app.use("/contactus", contactus)
+  app.use("/decrypt", decrypt)
+  app.use("/resturant", resturant)
+    // catch 404 and forward to error handler
+  app.use(function (req, res, next) {
+    var err = new Error('Not Found, Sorry');
+    err.status = 404;
+    next(err);
+  });
+
+  // error handlers
+
+  // development error handler
+  // will print stacktrace
+  if (app.get('env') === 'development') {
+    app.use(function (err, req, res, next) {
+      res.status(err.status || 500);
+      res.render('error', {
+        message: err.message,
+        error: err
+      });
+    });
+  }
+
+  // production error handler
+  // no stacktraces leaked to user
   app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
-      error: err
+      error: {}
     });
   });
-}
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
-
-app.listen(80, function () {
-  console.log("my app is running on port: 80")
-})
-module.exports = app;
+  app.listen(80, function () {
+    console.log("my app is running on port: 80")
+  })
+  module.exports = app;

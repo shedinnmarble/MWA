@@ -1,0 +1,44 @@
+<%-include ../header.html %>
+	<h1>
+		<%= title %>
+	</h1>
+	<table class="table table-hover table-bordered">
+		<tr>
+			<td>restaurant_id</td>
+			<td>name</td>
+			<td>Address</td>
+			<td>borough</td>
+			<td>cuisine</td>
+            <td>Grades</td>
+
+		</tr>
+
+		<% resturants.forEach(function(resturant){ %>
+			<tr>
+				<td>
+					<%= resturant.restaurant_id %>
+				</td>
+				<td>
+					<%= resturant.name %>
+				</td>
+				<td>
+					<%= resturant.address.building+", "+ resturant.address.street + ", "+ resturant.address.zipcode %>
+				</td>
+				<td>
+					<%= resturant.borough %>
+				</td>
+				<td>
+					<%= resturant.cuisine %>
+				</td>
+                	<td>
+					<%= resturant.grades.map(function(grade){
+                            return "date: "+ new Date(grade.date).toDateString() +", "+" grade: "+ grade.grade+", "+" score: "+grade.score;
+                    }).join(";") %>
+				</td>
+
+			</tr>
+			<% }) %>
+
+	</table>
+
+	<%-include ../footer.html %>
