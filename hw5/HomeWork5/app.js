@@ -14,7 +14,7 @@ var cons = require('consolidate')
   // New Code
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/mwa');
+var db = monk('mongodb://dewei:dewei@ds021895.mlab.com:21895/lanbue'); 
 var app = express();
 
 // view engine setup
