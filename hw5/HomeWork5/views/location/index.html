@@ -1,0 +1,28 @@
+<%-include ../header.html %>
+	<h1>
+		<%= title %>
+	</h1>
+	<table class="table table-hover table-bordered">
+		<tr>
+			<td>name</td>
+			<td>Category</td>
+		
+
+		</tr>
+
+		<% locations.forEach(function(location){ %>
+			<tr>
+				<td>
+					<%= location.name %>
+				</td>
+				<td>
+					<%= location.category %>
+				</td>
+				
+
+			</tr>
+			<% }) %>
+
+	</table>
+
+	<%-include ../footer.html %>

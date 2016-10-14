@@ -10,9 +10,11 @@ var users = require('./routes/users');
 var inventors = require('./routes/inventors')
 var contactus = require('./routes/contactus')
 var decrypt = require('./routes/decrypt')
+var location = require('./routes/location')
 var resturant = require('./routes/mongohw');
+var zips=require('./routes/zips');
 var cons = require('consolidate')
-  // New Code
+// New Code
 var MongoClient = require('mongodb').MongoClient;
 var MongoServer = require('mongodb').Server;
 //var monk = require('monk');
@@ -34,8 +36,8 @@ app.set('env', 'development')
 app.set('x-powered-by', false)
 app.set('trust proxy', true)
 app.enable('trust proxy')
-  // uncomment after placing your favicon in /public
-  //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -51,44 +53,46 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-  app.use('/', routes);
-  app.use('/users', users);
-  app.use('/inventors', inventors)
-  app.use("/contactus", contactus)
-  app.use("/decrypt", decrypt)
-  app.use("/resturant", resturant)
-    // catch 404 and forward to error handler
-  app.use(function (req, res, next) {
-    var err = new Error('Not Found, Sorry');
-    err.status = 404;
-    next(err);
-  });
+app.use('/', routes);
+app.use('/users', users);
+app.use('/inventors', inventors)
+app.use("/contactus", contactus)
+app.use("/decrypt", decrypt)
+app.use("/resturant", resturant)
+app.use("/location", location)
+app.use("/zips",zips)
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  var err = new Error('Not Found, Sorry');
+  err.status = 404;
+  next(err);
+});
 
-  // error handlers
+// error handlers
 
-  // development error handler
-  // will print stacktrace
-  if (app.get('env') === 'development') {
-    app.use(function (err, req, res, next) {
-      res.status(err.status || 500);
-      res.render('error', {
-        message: err.message,
-        error: err
-      });
-    });
-  }
-
-  // production error handler
-  // no stacktraces leaked to user
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
   app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
-      error: {}
+      error: err
     });
   });
+}
 
-  app.listen(80, function () {
-    console.log("my app is running on port: 80")
-  })
-  module.exports = app;
+// production error handler
+// no stacktraces leaked to user
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
+
+app.listen(80, function () {
+  console.log("my app is running on port: 80")
+})
+module.exports = app;

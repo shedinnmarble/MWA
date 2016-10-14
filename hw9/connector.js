@@ -12,5 +12,3 @@ function getDB(){
 }
 
 module.exports = getDB;
-
-
