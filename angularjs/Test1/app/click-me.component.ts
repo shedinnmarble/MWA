@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class ClickMeComponent {
   clickMessage = '';
+
   onClickMe() {
     this.clickMessage = 'You are my hero!';
   }
