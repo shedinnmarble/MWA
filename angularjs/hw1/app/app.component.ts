@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Product } from './product';
+import {ProductService} from './product.service';
 const PRODUCTS: Product[] = [
   { id: 11, name: 'Mr. Nice' },
   { id: 12, name: 'Narco' },
@@ -25,14 +26,7 @@ const PRODUCTS: Product[] = [
         <span class="badge">{{product.id}}</span> {{product.name}}
       </li>
     </ul>  
-    <div *ngIf="selectedProduct">
-        <h2>{{selectedProduct.name}} details!</h2>
-    <div><label>id: </label>{{selectedProduct.id}}</div>
-<div>
-    <label>name: </label>
-    <input [(ngModel)]="selectedProduct.name" placeholder="name"/>
-</div>
-    </div>
+    	<my-product-detail [product]="selectedProduct"></my-product-detail>
   `,
   styles: [`
     .selected {
@@ -82,12 +76,15 @@ const PRODUCTS: Product[] = [
       margin-right: .8em;
       border-radius: 4px 0 0 4px;
     }
-  `]
+  `],
+  providers: [ProductService]
 })
+
 export class AppComponent {
   title = 'Tour of Products';
   selectedProduct: Product;
-  products = PRODUCTS
+  products=this.productService.getProducts();
+  constructor(private productService:ProductService){}
   onSelect(product: Product): void {
     this.selectedProduct = product;
   }
