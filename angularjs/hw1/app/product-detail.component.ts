@@ -1,19 +1,30 @@
-import { Component, Input } from '@angular/core';
+// Keep the Input import for now, we'll remove it later:
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Params }   from '@angular/router';
+import { Location }                 from '@angular/common';
 import { Product } from './product';
+import {ProductService} from "./product.service";
 @Component({
     selector: 'my-product-detail',
-    template: `
-    <div *ngIf="product">
-      <h2>{{product.name}} details!</h2>
-      <div><label>id: </label>{{product.id}}</div>
-      <div>
-        <label>name: </label>
-        <input [(ngModel)]="product.name" placeholder="name"/>
-      </div>
-    </div>
-  `
+    templateUrl: 'product-detail.component.html',
+    styleUrls:['product-detail.component.css']
 })
-export class ProductDetailComponent {
+export class ProductDetailComponent implements OnInit{
     @Input()
     product: Product;
+    constructor(
+        private productService: ProductService,
+        private route: ActivatedRoute,
+        private location: Location
+    ) {}
+    ngOnInit(): void {
+        this.route.params.forEach((params: Params) => {
+            let id = +params['id'];
+            this.productService.getProduct(id)
+                .then(product => this.product = product);
+        });
+    }
+    goBack(): void {
+        this.location.back();
+    }
 }
