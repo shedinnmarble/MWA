@@ -1,13 +1,13 @@
-import {ProductDetailComponent} from "./product-detail.component";
-import {Routes, RouterModule} from "@angular/router";
-import {ProductComponent} from "./product.component";
-import {DashboardComponent} from "./dashboard.component";
-import {NgModule} from "@angular/core";
-const routes: Routes =[
+import { ProductDetailComponent } from "./product-detail.component";
+import { Routes, RouterModule } from "@angular/router";
+import { ProductComponent } from "./product.component";
+import { DashboardComponent } from "./dashboard.component";
+import { NgModule } from "@angular/core";
+const routes: Routes = [
     {
         path: 'heroes',
         component: ProductComponent
-    },{
+    }, {
         path: 'dashboard',
         component: DashboardComponent
     },
@@ -21,8 +21,8 @@ const routes: Routes =[
         component: ProductDetailComponent
     }
 ];
-    @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+@NgModule({
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

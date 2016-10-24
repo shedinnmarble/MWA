@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from './product';
-import {ProductService} from './product.service';
-import {Router} from "@angular/router";
+import { ProductService } from './product.service';
+import { Router } from "@angular/router";
 const PRODUCTS: Product[] = [
   { id: 11, name: 'Mr. Nice' },
   { id: 12, name: 'Narco' },
@@ -16,92 +16,45 @@ const PRODUCTS: Product[] = [
 ];
 
 @Component({
-  selector: 'my-heroes',
-  template: `
-    <h1>{{title}}</h1>
-    <h2>My Products</h2>
-    <ul class="heroes">
-      <li *ngFor="let product of products"
-      [class.selected]="product ===selectedProduct"
-       (click)="onSelect(product)">
-        <span class="badge">{{product.id}}</span> {{product.name}}
-      </li>
-    </ul>  
-    	<div *ngIf="selectedProduct">
-  <h2>
-    {{selectedProduct.name | uppercase}} is my hero
-  </h2>
-  <button (click)="gotoDetail()">View Details</button>
-</div>
-  `,
-  styles: [`
-    .selected {
-      background-color: #CFD8DC !important;
-      color: white;
-    }
-    .heroes {
-      margin: 0 0 2em 0;
-      list-style-type: none;
-      padding: 0;
-      width: 15em;
-    }
-    .heroes li {
-      cursor: pointer;
-      position: relative;
-      left: 0;
-      background-color: #EEE;
-      margin: .5em;
-      padding: .3em 0;
-      height: 1.6em;
-      border-radius: 4px;
-    }
-    .heroes li.selected:hover {
-      background-color: #BBD8DC !important;
-      color: white;
-    }
-    .heroes li:hover {
-      color: #607D8B;
-      background-color: #DDD;
-      left: .1em;
-    }
-    .heroes .text {
-      position: relative;
-      top: -3px;
-    }
-    .heroes .badge {
-      display: inline-block;
-      font-size: small;
-      color: white;
-      padding: 0.8em 0.7em 0 0.7em;
-      background-color: #607D8B;
-      line-height: 1em;
-      position: relative;
-      left: -1px;
-      top: -4px;
-      height: 1.8em;
-      margin-right: .8em;
-      border-radius: 4px 0 0 4px;
-    }
-  `],
+  selector: 'my-productes',
+  templateUrl: '../app/product.component.html',
+  styleUrls: ['../app/product.component.css'],
   providers: [ProductService]
 })
 
-export class ProductComponent  implements OnInit{
+export class ProductComponent implements OnInit {
 
   title = 'Tour of Products';
   selectedProduct: Product;
-  products:Product[];
-  getProducts():void{
-    this.productService.getProducts().then(products=>this.products=products);
+  products: Product[];
+  getProducts(): void {
+    this.productService.getProducts().then(products => this.products = products);
   }
-  constructor( private router: Router,private productService:ProductService){}
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.productService.create(name)
+      .then(product => {
+        this.products.push(product);
+        this.selectedProduct = null;
+      });
+  }
+  delete(product: Product): void {
+  this.productService
+      .delete(product.id)
+      .then(() => {
+        this.products = this.products.filter(h => h !== product);
+        if (this.selectedProduct === product) { this.selectedProduct = null; }
+      });
+}
+  constructor(private router: Router, private productService: ProductService) { }
   onSelect(product: Product): void {
     this.selectedProduct = product;
   }
   ngOnInit(): void {
-  this.getProducts();
+    this.getProducts();
   }
-    gotoDetail(): void {
+  gotoDetail(): void {
     this.router.navigate(['/detail', this.selectedProduct.id]);
   }
 }

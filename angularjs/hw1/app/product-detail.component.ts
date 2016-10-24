@@ -1,22 +1,26 @@
 // Keep the Input import for now, we'll remove it later:
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params }   from '@angular/router';
-import { Location }                 from '@angular/common';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Location } from '@angular/common';
 import { Product } from './product';
-import {ProductService} from "./product.service";
+import { ProductService } from "./product.service";
 @Component({
     selector: 'my-product-detail',
-    templateUrl: 'product-detail.component.html',
-    styleUrls:['product-detail.component.css']
+    templateUrl: '../app/product-detail.component.html',
+    styleUrls: ['../app/product-detail.component.css']
 })
-export class ProductDetailComponent implements OnInit{
+export class ProductDetailComponent implements OnInit {
     @Input()
     product: Product;
     constructor(
         private productService: ProductService,
         private route: ActivatedRoute,
         private location: Location
-    ) {}
+    ) { }
+    save(): void {
+        this.productService.update(this.product)
+            .then(() => this.goBack());
+    }
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let id = +params['id'];
